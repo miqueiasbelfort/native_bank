@@ -1,4 +1,4 @@
-#Native Bank
+# Native Bank
 * Um simples aplicativo que simula a criação de uma conta bancaria
 * O desafio foi feito pelo curso de React Native professor Matheus Fraga
 
