@@ -10,6 +10,7 @@ import { AntDesign } from '@expo/vector-icons';
 export default function App() {
 
   const [form, setForm] = useState(false)
+  const [isLogedd, setIsLogedd] = useState(false)
 
   const [name, setName] = useState('')
   const [years, setYears] = useState('')
@@ -17,10 +18,30 @@ export default function App() {
   const [limit, setLimit] = useState(350)
   const [isStudent, setIsStudent] = useState(false)
 
+
+  const logar = () => {
+    if(name == undefined || name == ''){
+      alert('O nome é Obrigatorio!')
+      return
+    } else if (years == undefined || years == ''){
+      alert('A idade é Obrigatoria!')
+      return
+    }
+    setIsLogedd(true)
+  }
+
   return (
     <View style={styles.container}>
       {
         form ? (
+          isLogedd ? <View style={styles.cardContainer}>
+              <AntDesign style={styles.card} name="creditcard" size={24} color="#fcd201"/>
+              <View style={styles.cardInfoContainer}>
+                <Text style={styles.textCard}>Seu Cartão: {name} - Platium Gold</Text>
+                <Text style={styles.textCard}>Limiti de <Text style={styles.bold}>R${limit.toFixed(2).toString().replace('.',',')}</Text></Text>
+              </View>
+              <Text style={styles.text}>Seu Cartão Vai te ajudar com diversas comprar. Aproveite ele!</Text>
+          </View> :
           <View style={styles.formContainer}>
               <View style={styles.inforContent}>
                 <Text style={styles.textLabel}>Primeior nome:</Text>
@@ -35,7 +56,7 @@ export default function App() {
                 <TextInput
                   placeholder='Ex: 18'
                   keyboardType='number'
-                  onChangeText={(name) => setName(name)}
+                  onChangeText={(name) => setYears(name)}
                   style={styles.input}
                 />
               </View>
@@ -71,13 +92,13 @@ export default function App() {
                   style={styles.choiceIsStudent}
                 />
               </View>
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity style={styles.btn} onPress={logar}>
                 <Text style={styles.btnText}>Criar Conta</Text>
               </TouchableOpacity>
           </View>
         ) : (
           <>
-            <Text style={styles.logo}>Native Bank</Text>
+            <Text style={styles.logo}>Native <Text style={{fontWeight: '300', color: '#fff'}}>Bank</Text></Text>
             <TouchableOpacity style={styles.buttonNext} onPress={() => setForm(!form)}>
               <AntDesign name="up" size={20} color="#000" />
             </TouchableOpacity>
@@ -102,6 +123,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     marginBottom: 15,
+    color: '#fcd201',
   },
   buttonNext: {
     width: 50,
@@ -159,5 +181,34 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 18,
     fontWeight: 'bold',
+  },
+
+  cardContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    marginTop: 50,
+  },
+  card: {
+    fontSize: 300,
+  },
+  cardInfoContainer: {
+    width: "100%",
+    justifyContent: 'flex-start'
+  },
+  textCard: {
+    color: "#fff",
+    fontSize: 20,
+    marginTop: 15,
+  },
+  bold: {
+    fontWeight: 'bold'
+  },
+  text: {
+    color: '#fff',
+    fontStyle: 'italic',
+    fontSize: 15,
+    marginTop: 10,
   }
 });
